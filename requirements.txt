@@ -1,0 +1,9 @@
+numpy>=1.26
+pandas>=2.1
+torch>=2.2
+pytorch-forecasting>=1.0
+scikit-learn>=1.4
+pyarrow>=14.0
+optuna>=3.5
+plotly>=5.19
+# wandb  # optional, for experiment tracking
