@@ -3,7 +3,7 @@ baseline.py
 
 Naive and Prophet baselines for benchmarking.
 
-Always worth having a simple baseline — it keeps you honest
+Always worth having a simple baseline  -  it keeps you honest
 about how much the fancy model is actually helping.
 
 Naive seasonal: predict next 24h = same 24h last week.
@@ -26,7 +26,7 @@ class NaiveSeasonalBaseline:
 
     def predict(self, history: np.ndarray) -> np.ndarray:
         if len(history) < self.seasonal_period + self.horizon:
-            # not enough history — fall back to last known value
+            # not enough history  -  fall back to last known value
             return np.full(self.horizon, history[-1])
         start = len(history) - self.seasonal_period
         return history[start:start + self.horizon]

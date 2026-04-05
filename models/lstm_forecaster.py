@@ -17,7 +17,7 @@ Input features per timestep:
     - hour_sin, hour_cos (cyclic encoding)
     - dow_sin, dow_cos  (cyclic day of week)
     - is_weekend
-    - recent_delta (first difference — helps the model see rate of change)
+    - recent_delta (first difference  -  helps the model see rate of change)
 
 Could add more exogenous features (outdoor temp, calendar events) but
 the above already gets you most of the way there. YAGNI for now.
@@ -47,7 +47,7 @@ class AttentionLayer(nn.Module):
     """
     Simple additive attention over encoder hidden states.
     Helps the decoder focus on relevant parts of the context window.
-    Not multi-head — kept it simple since the performance difference
+    Not multi-head  -  kept it simple since the performance difference
     on this dataset didn't justify the extra complexity.
     """
 
@@ -61,7 +61,7 @@ class AttentionLayer(nn.Module):
         """
         query: (batch, hidden)
         keys:  (batch, seq_len, hidden)
-        returns: (batch, hidden) — context vector
+        returns: (batch, hidden)  -  context vector
         """
         q = self.query_proj(query).unsqueeze(1)  # (batch, 1, hidden)
         k = self.key_proj(keys)                   # (batch, seq_len, hidden)
@@ -118,7 +118,7 @@ class LSTMForecaster(nn.Module):
     ) -> torch.Tensor:
         """
         x: (batch, context_len, input_size)
-        targets: (batch, horizon) — only used during training for teacher forcing
+        targets: (batch, horizon)  -  only used during training for teacher forcing
         returns: (batch, horizon)
         """
         batch_size = x.size(0)
@@ -145,7 +145,7 @@ class LSTMForecaster(nn.Module):
         c = c_n[-1] if not self.config.bidirectional_encoder else torch.zeros_like(h)
 
         # seed with last observed value
-        last_obs = x[:, -1, 0:1]  # (batch, 1) — the power_kw feature
+        last_obs = x[:, -1, 0:1]  # (batch, 1)  -  the power_kw feature
         outputs = []
 
         for step in range(self.config.horizon):

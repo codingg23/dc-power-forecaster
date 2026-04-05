@@ -1,5 +1,5 @@
 """
-predict.py — run inference with a trained checkpoint
+predict.py  -  run inference with a trained checkpoint
 
 Usage:
     python predict.py --checkpoint ./checkpoints/lstm_best.pt \

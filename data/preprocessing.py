@@ -92,7 +92,7 @@ class PowerDataset:
         else:
             raw = pd.read_csv(path, parse_dates=["timestamp"])
 
-        # aggregate to facility level — sum across all racks
+        # aggregate to facility level  -  sum across all racks
         # this assumes the raw data is per-rack
         if "rack_id" in raw.columns:
             logger.info("Aggregating per-rack data to facility level")
@@ -124,7 +124,7 @@ class PowerDataset:
             )
             remaining_nans = df[target_col].isna().sum()
             if remaining_nans > 0:
-                logger.warning(f"{remaining_nans} values still missing after interpolation — dropping")
+                logger.warning(f"{remaining_nans} values still missing after interpolation  -  dropping")
                 df = df.dropna()
 
         # first difference as an additional feature (rate of change)
@@ -171,7 +171,7 @@ class PowerDataset:
 
         Returns:
             X: (n_windows, context_len, n_features)
-            y: (n_windows, horizon)  — target feature only (index 0)
+            y: (n_windows, horizon)   -  target feature only (index 0)
         """
         ctx = self.config.context_len
         hor = self.config.horizon

@@ -1,5 +1,5 @@
 """
-train.py — training script for power forecaster models
+train.py  -  training script for power forecaster models
 
 Usage:
     python train.py --data ./data/power.parquet --model lstm --horizon 96 --epochs 50
@@ -65,7 +65,7 @@ def main():
 
     logger.info(f"Training {args.model} on {args.data}, device={DEVICE}")
 
-    # optionally log to W&B — skip if not configured
+    # optionally log to W&B  -  skip if not configured
     if args.wandb:
         try:
             import wandb
@@ -116,7 +116,7 @@ def main():
         )
         model = build_model(model_config).to(DEVICE)
     else:
-        raise NotImplementedError("TFT training not implemented here yet — use pytorch-forecasting directly")
+        raise NotImplementedError("TFT training not implemented here yet  -  use pytorch-forecasting directly")
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     logger.info(f"Model parameters: {n_params:,}")
