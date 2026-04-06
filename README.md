@@ -1,8 +1,8 @@
 # dc-power-forecaster
 
-Time-series forecasting for data centre power consumption. Predicts facility-level power draw (kW) up to 24 hours ahead at 15-minute resolution.
+Time series forecasting for data centre power consumption. Predicts facility level power draw (kW) up to 24 hours ahead at 15-minute resolution.
 
-Built this as the core forecasting module for Veltora. The goal is to give operators enough advance notice to pre-position cooling, negotiate spot power contracts, and flag anomalies before they cascade.
+Built this as the core forecasting module for Veltora. The goal is to give operators enough advance notice to pre position cooling, negotiate spot power contracts, and flag anomalies before they cascade.
 
 ## Why this matters
 
@@ -14,13 +14,13 @@ Forecasting also feeds into the supply chain problem - understanding utilisation
 
 Tried three things, kept the best two.
 
-**LSTM with exogenous features** - works well for 1-6h horizons. Features: time-of-day, day-of-week, recent load history, upcoming calendar events (known downtime windows, planned maintenance).
+**LSTM with exogenous features** - works well for 1-6h horizons. Features: time of day, day of week, recent load history, upcoming calendar events (known downtime windows, planned maintenance).
 
 **Temporal Fusion Transformer (TFT)** - better for 6-24h horizons. The interpretable attention mechanism helps figure out which time features actually matter. Takes longer to train but the uncertainty estimates are genuinely useful.
 
 **Prophet (baseline)** - Facebook's Prophet. Tried it first because it's fast to set up. Decomposition is nice for explainability but the accuracy on DC data is not great. Keeping it as a benchmark.
 
-Multi-step approach is direct multi-output (predicts all horizon steps in one forward pass) rather than recursive. Recursive error compounds too badly at 24h.
+Multi step approach is direct multi output (predicts all horizon steps in one forward pass) rather than recursive. Recursive error compounds too badly at 24h.
 
 ## Features
 
@@ -74,7 +74,7 @@ On synthetic data (not a great benchmark, I know):
 
 Coverage is for the probabilistic TFT outputs.
 
-Biggest finding: the most important feature by a significant margin is day-of-week combined with hour-of-day. Weekly seasonality in DC load is really strong. Most of what the model is learning is that pattern, plus autocorrelation in the residuals.
+Biggest finding: the most important feature by a significant margin is day of week combined with hour of day. Weekly seasonality in DC load is really strong. Most of what the model is learning is that pattern, plus autocorrelation in the residuals.
 
 Main failure mode: sudden load spikes from batch jobs that weren't in the historical pattern. The model can't predict those but the anomaly detection on residuals catches them quickly.
 
